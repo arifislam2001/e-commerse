@@ -11,7 +11,7 @@ const Button = ({
   ...props
 }) => {
   const base =
-    "inline-flex items-center cursor-pointer justify-center font-medium rounded-lg transition focus:outline-none";
+    "inline-flex cursor-pointer items-center cursor-pointer justify-center font-medium rounded-lg transition focus:outline-none";
 
   const variants = {
     primary: "bg-brand text-white ",

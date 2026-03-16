@@ -4,7 +4,7 @@ import PortfolioItems from './PortfolioItems'
 const Portfolio = () => {
   return (
      <div>
-      
+                                               
      </div>
   )
 }
