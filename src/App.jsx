@@ -1,18 +1,24 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router'
-import Layout from './Components/Layout'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Layout from './Layout'
 import Home from './pages/Home'
+import About from './pages/About'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    
+       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<Layout />} >
+         <Route index element={<Home/>}/>
+         <Route path="about" element={<About/>}/>
         </Route>
+       
       </Routes>
    </BrowserRouter>
+    
   )
 }
 
 export default App
+

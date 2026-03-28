@@ -3,25 +3,30 @@
 
 
 
-
 @theme {
     --color-primary : #383838;
     --color-secondary : #394146;
     --color-brand : #0198E9;
-    --color-badge : #FFB800;
-   
+    --background-image-badge : linear-gradient(90deg,rgba(255, 122, 0, 1) 0%, rgba(255, 184, 0, 1) 50%);
+
 }
-@utility container{
-    margin : auto;
-    padding: 0 15px;
+
+@utility container {
+    margin : 0 auto;
+
+    padding: 15px
+    
 }
 
 body{
- 
-  font-family: "Poppins", sans-serif;;
+     font-family: "Poppins", sans-serif;
 }
 
+
 .slick-dots .slick-active button{
-    @apply w-8 bg-brand
-    
+    @apply w-4 md:w-8 bg-brand
+}
+
+.sub_head{
+    @apply text-[26px] text-primary font-medium
 }
