@@ -7,12 +7,14 @@ import Shop from './pages/Shop'
 import ProductDeatils from './pages/ProductDeatils'
 import Registation from './pages/Registation'
 import Login from './pages/Login'
+import ApiTest from './pages/ApiTest'
 
 const App = () => {
   return (
     
        <BrowserRouter>
       <Routes>
+         <Route path="/api" element={<ApiTest/>}/>
         <Route path="/" element={<Layout />} >
          <Route index element={<Home/>}/>
          <Route path="about" element={<About/>}/>
