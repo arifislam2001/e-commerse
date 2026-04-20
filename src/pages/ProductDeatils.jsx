@@ -67,11 +67,11 @@ const ProductDeatils = () => {
  
   return (
    <section className='py-14'>
-      <div className="container grid grid-cols-2 gap-28">
-         <div className='grid grid-cols-4 gap-10'>
+      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-28">
+         <div className='grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-10'>
             
       
-      <Slider className='max-w-xl col-span-3'{...settingsLarge} asNavFor={nav2} ref={slider => (sliderRef1 = slider)}>
+      <Slider className='max-w-xl md:col-span-3'{...settingsLarge} asNavFor={nav2} ref={slider => (sliderRef1 = slider)}>
         <div>
           <img src="/image (5).png" alt="" className='w-full'/>
         </div>
@@ -116,39 +116,39 @@ const ProductDeatils = () => {
          <div >
           <div className='border-b pb-6 border-[#EAEAEA]  '>
             
-            <p className='text-primary font-medium text-2xl w-[610px]'>Super Skinny Rib Trouser & Joggers for Men By Sowdagar Trouser</p>
+            <p className='text-primary font-medium text-lg md:text-xl lg:text-2xl'>Super Skinny Rib Trouser & Joggers for Men By Sowdagar Trouser</p>
 
-            <div className='flex items-center gap-2 my-6'>
-              <p className='text-xl'>4.0</p>
-               <IoStar className='text-xl text-yellow-500'/>
-               <IoStar className='text-xl text-yellow-500'/>
-               <IoStar className='text-xl text-yellow-500'/>
-               <IoStar className='text-xl text-yellow-500'/>
-               <IoStar className='text-xl text-gray-300'/>
+            <div className='flex flex-wrap items-center gap-2 my-6'>
+              <p className='text-lg md:text-xl'>4.0</p>
+               <IoStar className='text-lg md:text-xl text-yellow-500'/>
+               <IoStar className='text-lg md:text-xl text-yellow-500'/>
+               <IoStar className='text-lg md:text-xl text-yellow-500'/>
+               <IoStar className='text-lg md:text-xl text-yellow-500'/>
+               <IoStar className='text-lg md:text-xl text-gray-300'/>
                <p className='text-primary/50'>(223)</p>
                 <span className='text-primary/50'>|</span>
 
                 <div className='flex items-center gap-2'>
                   <FaCheck className='text-green-400' />
                   <p>4,320 Sold</p>
-                  <span className='text-primary/50'>|</span>
+                  <span className='text-primary/50 hidden md:inline'>|</span>
 
                 </div>
 
-                <div className='flex items-center gap-3'>
-                  <IoMdHeart className='text-gray-400 text-xl'/>
-                  <p className='font-semibold text-base text-brand'>Add to wishlist</p>
+                <div className='flex items-center gap-2 md:gap-3'>
+                  <IoMdHeart className='text-gray-400 text-lg md:text-xl'/>
+                  <p className='font-semibold text-sm md:text-base text-brand'>Add to wishlist</p>
 
                 </div>
             </div>
 
-            <div className='my-8 flex  items-center gap-4'>
-              <p className='text-4xl font-semibold text-brand '>$976.33</p>
-              <p className='line-through text-xl text-primary/50'>$1,020.99</p>
-              <p className='bg-badge px-2.5 py-1 text-white'>20%</p>
+            <div className='my-8 flex flex-wrap items-center gap-4'>
+              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand '>$976.33</p>
+              <p className='line-through text-base md:text-xl text-primary/50'>$1,020.99</p>
+              <p className='bg-badge px-2.5 py-1 text-white text-sm md:text-base'>20%</p>
             </div>
 
-            <div className='flex gap-6 items-center'>
+            <div className='flex flex-wrap gap-4 md:gap-6 items-center'>
               <p>SKU: <span className='text-primary/60'>12314124124</span></p>
               <div className='flex items-center gap-1'>
                 <FaCheckCircle className='text-green-500'/>
@@ -158,11 +158,11 @@ const ProductDeatils = () => {
             </div>
           </div>
           <div className='my-8'>
-            <p className='text-xl w-[640px] text-primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+            <p className='text-base md:text-lg lg:text-xl text-primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                et dolore magna aliqua. Ut enim ad minim veniam</p>
 
-               <div className='ml-7 my-4 flex '>
-                   <ol className='list-disc space-y-4 '>
+               <div className='ml-4 md:ml-7 my-4 flex '>
+                   <ol className='list-disc space-y-2 md:space-y-4 '>
                     {
                       catagories.map((item)=>(
                         <li className='text-primary'>{item}</li>
@@ -172,7 +172,7 @@ const ProductDeatils = () => {
                    </ol>
                </div>
           </div>
-          <div className='flex gap-6 items-center'>
+          <div className='flex flex-wrap gap-4 md:gap-6 items-center'>
             <p>Size</p>
              {
               size.map((item)=>(
@@ -188,17 +188,17 @@ const ProductDeatils = () => {
         
           </div>
 
-          <div className='py-4 flex gap-8 items-center mt-4 '>
+          <div className='py-4 flex flex-wrap gap-4 md:gap-8 items-center mt-4 '>
             <p>Quantity: </p>
             
-           <div className='flex gap-4 border items-center border-[#EAEAEA] rounded'>
-             <button onClick={minus} className='bg-[#EFEFEF] px-4 py-2 text-xl'>-</button>
+           <div className='flex gap-2 md:gap-4 border items-center border-[#EAEAEA] rounded'>
+             <button onClick={minus} className='bg-[#EFEFEF] px-3 md:px-4 py-2 text-lg md:text-xl'>-</button>
             <p className=''>{val}</p>
-            <button onClick={plus} className='bg-[#EFEFEF] px-4 py-2 text-xl '>+</button>
+            <button onClick={plus} className='bg-[#EFEFEF] px-3 md:px-4 py-2 text-lg md:text-xl '>+</button>
            </div>
             
-            <Link className='bg-brand text-white px-6 py-2 rounded '>Add cart</Link>
-            <Link className='border-2 border-blue-400 px-6 py-1.5 bg-blue-50 font-semibold text-blue-400 rounded'>Buy Now</Link>
+            <Link className='bg-brand text-white px-4 md:px-6 py-2 rounded '>Add cart</Link>
+            <Link className='border-2 border-blue-400 px-4 md:px-6 py-1.5 bg-blue-50 font-semibold text-blue-400 rounded'>Buy Now</Link>
           </div>
          </div>
       </div>
