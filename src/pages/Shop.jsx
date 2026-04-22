@@ -4,10 +4,19 @@ import ProductCard from '../ui/ProductCard'
 import { Link } from 'react-router'
 import { useGetProductsQuery } from '../services/api'
 import { FaFilter } from 'react-icons/fa'
+import { Pagination } from '../ui/Pagination'
 
 const Shop = () => {
-  const {data , isLoading , error} = useGetProductsQuery()
-  const [showFilters, setShowFilters] = useState(false)
+  const [limit , setLimit ] = useState(10);
+  const [pageNum , SetPageNum] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const {data , isLoading , error} = useGetProductsQuery({limit , skip : limit * (pageNum - 1)})
+ 
+  useEffect (()=>{
+   if(data?.total){
+    setTotalPage(Math.ceil(data?.total / limit))
+   }
+  },[data?.total, limit]);
 
  
   
@@ -16,12 +25,20 @@ const Shop = () => {
   // const [error, SetError] = useState("")
   const sortoption = [
     {
-      value: "Newest Items",
-      label: "Newest Items"
+      value: "10",
+      label: "10"
     },
     {
-      value: "Oldest Items",
-      label: "Oldest Items"
+      value: "30",
+      label: "30"
+    },
+    {
+      value: "50",
+      label: "50"
+    },
+    {
+      value: "80",
+      label: "80"
     }
   ]
   const catagories = [
@@ -67,15 +84,10 @@ const Shop = () => {
   return (
     <main className='py-12 '>
       <div className="container grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14">
-        {/* Mobile Filter Toggle */}
-        <button 
-          onClick={() => setShowFilters(!showFilters)}
-          className='lg:hidden flex items-center gap-2 bg-brand text-white px-4 py-2 rounded mb-4'
-        >
-          <FaFilter /> Filters
-        </button>
+      
+       
         
-        <div className={`col-span-1 lg:col-span-3 py-6 px-4 lg:px-5 bg-white h-fit sticky top-0 left-0 ${showFilters ? 'block' : 'hidden'} lg:block`}>
+        <div className="col-span-1 lg:col-span-3 py-6 px-4 lg:px-5 bg-white h-fit sticky top-0 left-0 lg:block">
           <h3 className='text-base lg:text-lg font-medium text-primary'>Related Categories</h3>
           <div className='space-y-4 lg:space-y-5 mt-4'>
 
@@ -97,16 +109,16 @@ const Shop = () => {
         <div className='col-span-1 lg:col-span-9'>
 
           <div className='flex flex-wrap items-center justify-between gap-4 mb-6'>
-            <p className=' font-medium text-sm lg:text-lg text-[#424241]/50'>Showing  <span className='text-secondary'>20 </span>of <span className='text-secondary'>160</span> product</p>
+            <p className=' font-medium text-sm lg:text-lg text-[#424241]/50'>Showing  <span className='text-secondary'> {limit * (pageNum - 1) + 1} - {data?.total > limit * pageNum ? limit * pageNum : data?.total} </span>of <span className='text-secondary'>{data?.total}</span> product</p>
             <div className='flex items-center  gap-3 lg:gap-7 ' >
-              <p className='whitespace-nowrap text-sm lg:text-base'>Sort By:</p>
-              <SelectInput className='' options={sortoption} />
+              <p className='whitespace-nowrap text-sm lg:text-base'>Display</p>
+              <SelectInput className='max-w-20' options={sortoption} value={limit} onChange={(e)=> setLimit(e.target.value)}/>
 
 
 
             </div>
           </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6'>
 
             {
 
@@ -116,47 +128,15 @@ const Shop = () => {
                 :
                 data.products.map((item) => (
 
-                  <ProductCard key={item.id} data={item} text={item.title} price={`৳${item.price}`}>
+                  <ProductCard key={item.id} data={item} price={`৳${item.price}`} showoffer={true}>
                   </ProductCard>
                 ))
             }
 
 
-            <ProductCard img="/image (5).png " text="Women black dress and red hat collections" price="৳1000.00">
-
-            </ProductCard>
-            <ProductCard img="/image (3).png" text="Women fashion dress set" price="৳1000">
-
-            </ProductCard>
-
-            <ProductCard img="/image (7).png  " text="Women fashion dress se " price="৳1000">
-            </ProductCard>
-            <ProductCard img="/image (8).png " text="Headrest Executive Mesh Office Chair set" price="৳5000">
-
-            </ProductCard>
-            <ProductCard img="/image (9).png" text="Women black dress and red hat collections" price="৳1000.00">
-
-            </ProductCard>
-            <ProductCard img="/image (4).png" text="Headrest Executive Mesh Office Chair set" price="৳5000">
-
-            </ProductCard>
-            <ProductCard img="/image (5).png " text="Women black dress and red hat collections" price="৳1000.00">
-
-            </ProductCard>
-            <ProductCard img="/image (3).png" text="Women fashion dress set" price="৳1000">
-
-            </ProductCard>
-
-            <ProductCard img="/image (7).png  " text="Women fashion dress se " price="৳1000">
-            </ProductCard>
-            <ProductCard img="/image (8).png " text="Headrest Executive Mesh Office Chair set" price="৳5000">
-
-            </ProductCard>
-            <ProductCard img="/image (9).png" text="Women black dress and red hat collections" price="৳1000.00">
-
-            </ProductCard>
 
           </div>
+          <Pagination handlechange={(num)=>SetPageNum(num)} pageNum={pageNum} totalPage={totalPage}/>
         </div>
       </div>
     </main>
