@@ -21,11 +21,11 @@ export function Pagination({ handlechange , pageNum , totalPage}) {
     const next = () => {
         if (pageNum === totalPage) return;
 
-        handlechange(PageNum + 1);
+        handlechange(pageNum + 1);
     };
 
     const prev = () => {
-        if (pageNum === 1) return;
+        if (pageNum === totalPage) return;
 
         handlechange(pageNum - 1);
     };
@@ -36,7 +36,7 @@ export function Pagination({ handlechange , pageNum , totalPage}) {
 
                 className="flex items-center gap-2 rounded-full"
                 onClick={prev}
-                disabled={pageNum === 1}
+                disabled={pageNum === totalPage}
             >
                 <BiArrowFromRight strokeWidth={2} className="h-4 w-4" /> Previous
             </Button>
@@ -44,7 +44,8 @@ export function Pagination({ handlechange , pageNum , totalPage}) {
                 {
                     [...Array(totalPage)].map((i , indx)=>(
 
-                        <Button variant={pageNum == (indx + 1) ? "primary" : "secondary"} className="rounded-full" onClick={()=>handlechange(indx + 1)}>{indx + 1}</Button>
+                        <Button variant={pageNum == (indx + 1) ? "primary" : "secondary"} className="rounded-full" 
+                        onClick={()=>handlechange(indx + 1)}>{indx + 1}</Button>
                     ))
                 }
                

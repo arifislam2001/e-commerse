@@ -6,9 +6,19 @@ export const apiservice = createApi({
   }),
   endpoints: (build)=>({
     getProducts : build.query({
-        query : ({limit , skip})=> `/products?limit=${limit}&skip=${skip}`,
+        query : ({category , limit , skip })=> {
+         
+          
+          return `/products${category ? `/category/${category}` : ""}?limit=${limit}&skip=${skip}`
+        }
     }),
+    getCategoryList: build.query({
+      query : () => "/products/category-list",
+    }),
+    getProductDetails : build.query({
+      query : (id)=> `/products/${id}`,
+    })
   }),
 });
 
-export const { useGetProductsQuery } = apiservice
+export const { useGetProductsQuery , useGetCategoryListQuery , useGetProductDetailsQuery} = apiservice

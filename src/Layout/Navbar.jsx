@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Input from '../ui/Input'
 import { IoSearch } from 'react-icons/io5'
 import Button from '../ui/Button'
@@ -9,6 +9,7 @@ import { GiShoppingCart } from 'react-icons/gi'
 
 
 const Navbar = () => {
+
     const catagories = [
         "Women's Fashion" ,
         "men's Fashion",
@@ -35,7 +36,11 @@ const Navbar = () => {
                 </div>
 
                 <div className='flex md:gap-10 gap-5  order-2 md:order-3' >
-                   <Link to="/login" className='flex items-center gap-1.5'><FaRegUser className='text-xl'/> <span className='hidden md:block'>Login  </span></Link>
+                   <Link to="/login" className='flex  gap-1.5 items-center '> <FaRegUser className='text-xl'/><span className='hidden md:block'>Login</span></Link>
+                   
+                    
+
+                  
                    <Link to="/api" className='flex items-center gap-1.5'><GoHeart className='text-xl' /><span className='hidden md:block'>Wishlist  </span></Link>
                    <Link to="/shop"  className='flex items-center gap-1.5'><GiShoppingCart className='text-2xl' /><span className='hidden md:block'> My Cart</span> <span className='bg-red-500 w-5 h-5 flex items-center rounded-full justify-center text-white'>1</span></Link>
                  

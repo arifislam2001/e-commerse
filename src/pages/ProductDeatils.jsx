@@ -1,14 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Slider from "react-slick";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IoStar } from 'react-icons/io5';
 import { FaCheck, FaCheckCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
 import { NextArrow, PrevArrow } from '../ui/Arrows';
+import { useGetProductDetailsQuery } from '../services/api';
 
 
 
 const ProductDeatils = () => {
+  const { id } = useParams();
+
+
+  const { data } = useGetProductDetailsQuery(id);
+  
+
+
+
   const [selectedSize, setselectedSize] = useState("S")
   const [val, setVal] = useState(1)
   const [nav1, setNav1] = useState(null);
@@ -72,18 +81,14 @@ const ProductDeatils = () => {
 
 
           <Slider className='max-w-xl md:col-span-3'{...settingsLarge} asNavFor={nav2} ref={slider => (sliderRef1 = slider)}>
-            <div>
-              <img src="/image (5).png" alt="" className='w-full' />
-            </div>
-            <div>
-              <img src="/image (4).png" alt="" className='w-full' />
-            </div>
-            <div>
-              <img src="/image (7).png" alt="" className='w-full' />
-            </div>
-            <div>
-              <img src="/Image Placeholder (6).png" alt="" className='w-full' />
-            </div>
+            {
+              data?.images.map((item) => (
+                <div key={item}>
+                  <img src={item} alt="" className='w-full' />
+                </div>
+
+              ))
+            }
 
 
           </Slider>
@@ -97,18 +102,14 @@ const ProductDeatils = () => {
             {...settingsmall}
 
           >
-            <div>
-              <img src="/image (5).png" alt="" className='w-3/4' />
-            </div>
-            <div>
-              <img src="/image (4).png" alt="" className='w-3/4' />
-            </div>
-            <div>
-              <img src="/image (7).png" alt="" className='w-3/4' />
-            </div>
-            <div>
-              <img src="/Image Placeholder (6).png" alt="" className='w-3/4' />
-            </div>
+            {
+              data?.images.map((item) => (
+                <div key={item}>
+                  <img src={item} alt="" className='w-full' />
+                </div>
+
+              ))
+            }
           </Slider>
 
         </div>
@@ -116,10 +117,10 @@ const ProductDeatils = () => {
         <div >
           <div className='border-b pb-6 border-[#EAEAEA]  '>
 
-            <p className='text-primary font-medium text-lg md:text-xl lg:text-2xl'>Super Skinny Rib Trouser & Joggers for Men By Sowdagar Trouser</p>
-
+            <h1 className='text-primary font-medium text-lg md:text-xl lg:text-4xl'>{data?.title}</h1>
+            <p className='text-primary text-2xl mt-4'>{data?.description}</p>
             <div className='flex flex-wrap items-center gap-2 my-6'>
-              <p className='text-lg md:text-xl'>4.0</p>
+              <p className='text-lg md:text-xl'>{data?.rating}</p>
               <IoStar className='text-lg md:text-xl text-yellow-500' />
               <IoStar className='text-lg md:text-xl text-yellow-500' />
               <IoStar className='text-lg md:text-xl text-yellow-500' />
@@ -143,23 +144,23 @@ const ProductDeatils = () => {
             </div>
 
             <div className='my-8 flex flex-wrap items-center gap-4'>
-              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand '>$976.33</p>
+              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand '>{data?.price}</p>
               <p className='line-through text-base md:text-xl text-primary/50'>$1,020.99</p>
-              <p className='bg-badge px-2.5 py-1 text-white text-sm md:text-base'>20%</p>
+              <p className='bg-badge px-2.5 py-1 text-white text-sm md:text-base'>{data?.
+                discountPercentage
+              }</p>
             </div>
 
             <div className='flex flex-wrap gap-4 md:gap-6 items-center'>
-              <p>SKU: <span className='text-primary/60'>12314124124</span></p>
+              <p>SKU: <span className='text-primary/60'>{data?.sku}</span></p>
               <div className='flex items-center gap-1'>
                 <FaCheckCircle className='text-green-500' />
-                <p className='text-primary/60'>In Stock</p>
+                <p className='text-primary/60'>{data?.stock}</p>
               </div>
 
             </div>
           </div>
           <div className='my-8'>
-            <p className='text-base md:text-lg lg:text-xl text-primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-              et dolore magna aliqua. Ut enim ad minim veniam</p>
 
             <div className='ml-4 md:ml-7 my-4 flex '>
               <ol className='list-disc space-y-2 md:space-y-4 '>
