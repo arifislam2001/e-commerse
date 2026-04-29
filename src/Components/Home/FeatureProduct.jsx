@@ -22,7 +22,7 @@ const FeatureProduct= () => {
          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-8 mt-5'>
             {
                data?.products.map((item)=>(
-            <ProductCard key={item.id} data={item} img="/image (2).png " text="Headrest Executive Mesh Office Chair set" price="৳10500" showoffer={true}>
+            <ProductCard key={item.id} data={item} img="/image (2).png " text="Headrest Executive Mesh Office Chair set"  >
 
             </ProductCard>
 

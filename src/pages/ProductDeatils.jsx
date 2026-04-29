@@ -10,10 +10,13 @@ import { useGetProductDetailsQuery } from '../services/api';
 
 
 const ProductDeatils = () => {
+  
+
+
   const { id } = useParams();
 
 
-  const { data } = useGetProductDetailsQuery(id);
+  const { data } = useGetProductDetailsQuery(id );
   
 
 
@@ -84,12 +87,12 @@ const ProductDeatils = () => {
             {
               data?.images.map((item) => (
                 <div key={item}>
-                  <img src={item} alt="" className='w-full' />
+                  <img src={item} alt="" className='w-full transition-transform duration-300 hover:scale-110' />
                 </div>
 
               ))
             }
-
+            
 
           </Slider>
 
@@ -105,7 +108,7 @@ const ProductDeatils = () => {
             {
               data?.images.map((item) => (
                 <div key={item}>
-                  <img src={item} alt="" className='w-full' />
+                  <img src={item} alt="" className='w-full transition-transform duration-300 hover:scale-110 ' />
                 </div>
 
               ))

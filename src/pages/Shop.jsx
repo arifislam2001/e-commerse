@@ -7,20 +7,21 @@ import { FaFilter } from 'react-icons/fa'
 import { Pagination } from '../ui/Pagination'
 
 const Shop = () => {
-  const  [ searchParams ] = useSearchParams();
-  const category = searchParams.get("category");
-
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get('category');
   
-  const [limit , setLimit ] = useState(30);
-  const [pageNum , SetPageNum] = useState(1)
+
+  const [limit, setLimit] = useState(30);
+  const [pageNum, SetPageNum] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
-  const {data , isLoading , error} = useGetProductsQuery({
-    limit ,
-    skip : limit * (pageNum - 1),
+  const { data, isLoading, error } = useGetProductsQuery({
+    limit,
+    skip: limit * (pageNum - 1),
     category,
-   
-    })
-     const { data: categories } = useGetCategoryListQuery();
+  
+    
+  })
+  const { data: categories } = useGetCategoryListQuery();
  
   useEffect (()=>{
    if(data?.total){
@@ -55,7 +56,7 @@ const Shop = () => {
        
         
         <div className="col-span-1 lg:col-span-3 py-6 px-4 lg:px-5 bg-white h-fit sticky top-0 left-0 lg:block">
-          <h3 className='text-base lg:text-lg font-medium text-primary'>Related Categories</h3>
+          <h3 className='text-base lg:text-lg  font-medium text-primary'>Related Categories</h3>
           <div className='py-6 lg:py-12 my-4 lg:my-6 border-y-2 border-y-secondary/10'>
             <h3 className='text-base lg:text-lg font-medium text-primary'>Filter by Price</h3>
             <input type="Range" className='w-full lg:w-64 my-4 lg:my-7' />
@@ -66,8 +67,8 @@ const Shop = () => {
             {
               categories?.map((item) => (
 
-                <Link to={`/shop?category=${item}`} key={item} className='block text-base  text-secondary/90 capitalize'>{item}</Link>
-
+                <Link to={`/shop?category=${item}`} key={item} className=' hover:text-blue-600 block text-base  text-secondary/90 capitalize  '>{item}</Link>
+              
               ))
             }
 
@@ -77,7 +78,10 @@ const Shop = () => {
         <div className='col-span-1 lg:col-span-9'>
 
           <div className='flex flex-wrap items-center justify-between gap-4 mb-6'>
-            <p className=' font-medium text-sm lg:text-lg text-[#424241]/50'>Showing  <span className='text-secondary'> {limit * (pageNum - 1) + 1} - {data?.total > limit * pageNum ? limit * pageNum : data?.total} </span>of <span className='text-secondary'>{data?.total}</span> product</p>
+            <div>
+            
+              <p className='font-medium text-sm lg:text-lg text-[#424241]/50'>Showing  <span className='text-secondary'> {data?.total ? limit * (pageNum - 1) + 1 : 0} - {data?.total > limit * pageNum ? limit * pageNum : data?.total} </span>of <span className='text-secondary'>{data?.total}</span> product</p>
+            </div>
             <div className='flex items-center  gap-3 lg:gap-7 ' >
               <p className='whitespace-nowrap text-sm lg:text-base'>Display</p>
               <SelectInput className='max-w-20' options={sortoption} value={limit} onChange={(e)=> setLimit(e.target.value)}/>
@@ -95,7 +99,7 @@ const Shop = () => {
                  <p>Loading products...</p>
                  : 
                    data?.products?.map((item) => (
-                      <ProductCard key={item.id} data={item} price={`৳${item.price}`} />
+                      <ProductCard key={item.id} data={item}  />
                     ))
                   
             }
@@ -103,7 +107,11 @@ const Shop = () => {
 
 
           </div>
-          <Pagination handlechange={(num)=>SetPageNum(num)} pageNum={pageNum} totalPage={totalPage}/>
+          <Pagination 
+            handlechange={(num)=>SetPageNum(num)}
+            pageNum={pageNum}
+            totalPage={totalPage}
+          />
         </div>
       </div>
     </main>

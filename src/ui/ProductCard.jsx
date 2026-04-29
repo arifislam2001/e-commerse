@@ -8,12 +8,12 @@ const ProductCard = ({ data}) => {
   
   
   return (
-    <div className='mt-7 p-2.5 border border-[#E9E9E9] rounded-2xl flex flex-col justify-between bg-white'>
+ <div className='mt-7 p-2.5 border border-[#E9E9E9] rounded-2xl flex flex-col shadow justify-between bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-2'>
     
    
        <div className=' rounded-2xl  overflow-hidden relative'>
        <Link to={`/shop/${data.id}`}>
-          <img src={ data?.thumbnail} alt="" className='w-full'/>
+         <img src={data?.thumbnail} alt="" className='w-full transition-transform duration-300 hover:scale-110'/>
        </Link>
        {
         data?.discountPercentage &&
@@ -38,7 +38,7 @@ const ProductCard = ({ data}) => {
        <h4 className='text-xs md:text-xl  font-normal py-4'>
          {data?.title}
        </h4>
-
+        
        <div className='flex justify-between '>
           <p className='text-sm md:text-2xl text-brand'>{data?.price}</p>
          <button>
@@ -47,7 +47,7 @@ const ProductCard = ({ data}) => {
          </button>
 
        </div>
-
+       
     </div>
   )
 }

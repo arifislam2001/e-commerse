@@ -2,23 +2,37 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const apiservice = createApi({
     baseQuery: fetchBaseQuery({
-    baseUrl: 'https://dummyjson.com',
-  }),
-  endpoints: (build)=>({
-    getProducts : build.query({
-        query : ({category , limit , skip })=> {
-         
-          
-          return `/products${category ? `/category/${category}` : ""}?limit=${limit}&skip=${skip}`
-        }
+        baseUrl: 'https://dummyjson.com',
     }),
-    getCategoryList: build.query({
-      query : () => "/products/category-list",
+    endpoints: (build) => ({
+        getProducts: build.query({
+            query: ({ category, limit, skip }) => {
+                return `/products${category ? `/category/${category}` : ""}?limit=${limit}&skip=${skip}`
+            }
+        }),
+        getCategoryList: build.query({
+            query: () => "/products/category-list",
+        }),
+        getProductDetails: build.query({
+            query: (id) => `/products/${id}`,
+        }),
+        searchProducts: build.query({
+            query: (search) => `/products/search?q=${search}`
+        }),
+        login: build.mutation({
+            query: ({ data }) => ({
+                url: `/auth/login`,
+                method: 'POST',
+                body: data,
+            }),
+        })
     }),
-    getProductDetails : build.query({
-      query : (id)=> `/products/${id}`,
-    })
-  }),
 });
 
-export const { useGetProductsQuery , useGetCategoryListQuery , useGetProductDetailsQuery} = apiservice
+export const {
+    useGetProductsQuery,
+    useGetCategoryListQuery,
+    useGetProductDetailsQuery,
+    useLoginMutation,
+    useLazySearchProductsQuery
+} = apiservice

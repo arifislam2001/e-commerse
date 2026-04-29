@@ -24,21 +24,20 @@ export function Pagination({ handlechange , pageNum , totalPage}) {
         handlechange(pageNum + 1);
     };
 
-    const prev = () => {
-        if (pageNum === totalPage) return;
-
-        handlechange(pageNum - 1);
-    };
-
+  const prev = () => {
+    if (pageNum === 1) return;  
+    handlechange(pageNum - 1);
+};
     return (
         <div className="flex items-center gap-4 mt-10 justify-center">
             <Button
 
                 className="flex items-center gap-2 rounded-full"
                 onClick={prev}
-                disabled={pageNum === totalPage}
+              disabled={pageNum === 1}  
             >
-                <BiArrowFromRight strokeWidth={2} className="h-4 w-4" /> Previous
+                 Previous
+                <BiArrowFromRight strokeWidth={2} className="h-4 w-4" /> 
             </Button>
             <div className="flex items-center gap-2">
                 {

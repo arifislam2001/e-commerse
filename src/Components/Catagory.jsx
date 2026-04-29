@@ -17,7 +17,7 @@ const Catagory = () => {
           {
             data?.map((item) => (
 
-              <Link key={item} to={`/shop?category=${item}`} className='flex shadow p-4 items-center  rounded-xl '>
+              <Link key={item} to={`/shop?category=${item}`} className='flex shadow p-4 items-center rounded-xl border border-transparent hover:border-blue-500 transition-colors duration-300'>
 
                 <p className='pl-4 pr-4 '>{item}</p>
                 <FaChevronRight className='ml-auto text-primary/60' />
