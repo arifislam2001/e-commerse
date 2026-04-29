@@ -15,7 +15,7 @@ const Navbar = () => {
     const [search, setSearch] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
 
-    const [searchTrigger, { data: searchProducts }] = useLazySearchProductsQuery();
+const [searchTrigger, { data: searchProducts }] = useLazySearchProductsQuery();
 
     // debounce search
     useEffect(() => {
@@ -26,7 +26,7 @@ const Navbar = () => {
             } else {
                 setShowDropdown(false);
             }
-        }, 500);
+        }, 1000);
 
         return () => clearTimeout(delay);
     }, [search, searchTrigger]);
@@ -52,12 +52,12 @@ const Navbar = () => {
             <nav className='py-8'>
                 <div className="container flex justify-between flex-wrap md:flex-nowrap gap-5">
 
-                    {/* LOGO */}
+             
                     <Link to="/" className='order-1'>
                         <img src="/nirvoya.png" alt="logo" />
                     </Link>
 
-                    {/* 🔍 SEARCH BOX */}
+                  
                     <div className='relative flex bg-[#F1F1F1] h-fit items-center rounded-md w-full md:max-w-md xl:max-w-3xl order-3 md:order-2'>
 
                         <Input
@@ -68,7 +68,7 @@ const Navbar = () => {
                             className='border-none w-full bg-transparent'
                         />
 
-                        {/* Search Button এ ক্লিক করলেও যাবে */}
+                        
                         <Button
                             variant='primary'
                             className='rounded-l-none text-2xl'
@@ -87,7 +87,7 @@ const Navbar = () => {
                             <IoSearch />
                         </Button>
 
-                        {/* 🔽 DROPDOWN */}
+                       
                         {showDropdown && searchProducts?.products?.length > 0 && (
                             <div className="absolute top-full left-0 w-full bg-white shadow-xl z-[9999] max-h-72 overflow-y-auto rounded-md mt-1 border">
                                 {searchProducts.products.map((item) => (

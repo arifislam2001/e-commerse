@@ -17,7 +17,9 @@ export const apiservice = createApi({
             query: (id) => `/products/${id}`,
         }),
         searchProducts: build.query({
-            query: (search) => `/products/search?q=${search}`
+            query: (search) => `/products/search?q=${search}`,
+              
+
         }),
         login: build.mutation({
             query: ({ data }) => ({
