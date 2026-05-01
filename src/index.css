@@ -31,3 +31,5 @@ body{
 .sub_head{
     @apply text-[26px] text-primary font-medium
 }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

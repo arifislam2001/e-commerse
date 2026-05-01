@@ -10,19 +10,20 @@ import { useGetProductDetailsQuery } from '../services/api';
 
 
 const ProductDeatils = () => {
-  
+
 
 
   const { id } = useParams();
 
 
-  const { data } = useGetProductDetailsQuery(id );
-  
+  const { data } = useGetProductDetailsQuery(id);
+
 
 
 
   const [selectedSize, setselectedSize] = useState("S")
   const [val, setVal] = useState(1)
+  const [totalPrice, setTotalPrice] = useState(null)
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   let sliderRef1 = useRef(null);
@@ -32,7 +33,12 @@ const ProductDeatils = () => {
     setNav1(sliderRef1);
     setNav2(sliderRef2);
   }, []);
-
+  
+  useEffect(() => {
+    if (data?.price) {
+      setTotalPrice(data.price)
+    }
+  }, [data])
   const settingsLarge = {
     dots: false,
 
@@ -65,17 +71,18 @@ const ProductDeatils = () => {
 
 
   const plus = () => {
-    setVal(val + 1)
-
+    const newVal = val + 1
+    setVal(newVal)
+    setTotalPrice((data?.price * newVal).toFixed(2))
   }
 
   const minus = () => {
-    if (val > 1)
-      setVal(val - 1)
-
-
+    if (val > 1) {
+      const newVal = val - 1
+      setVal(newVal)
+      setTotalPrice((data?.price * newVal).toFixed(2))
+    }
   }
-
 
   return (
     <section className='py-14'>
@@ -92,7 +99,7 @@ const ProductDeatils = () => {
 
               ))
             }
-            
+
 
           </Slider>
 
@@ -147,7 +154,9 @@ const ProductDeatils = () => {
             </div>
 
             <div className='my-8 flex flex-wrap items-center gap-4'>
-              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand '>{data?.price}</p>
+              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand'>
+                ${totalPrice}
+              </p>
               <p className='line-through text-base md:text-xl text-primary/50'>$1,020.99</p>
               <p className='bg-badge px-2.5 py-1 text-white text-sm md:text-base'>{data?.
                 discountPercentage
