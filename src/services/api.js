@@ -27,7 +27,9 @@ export const apiservice = createApi({
                 method: 'POST',
                 body: data,
             }),
-        })
+        }),
+       
+        
     }),
 });
 
@@ -36,5 +38,6 @@ export const {
     useGetCategoryListQuery,
     useGetProductDetailsQuery,
     useLoginMutation,
-    useLazySearchProductsQuery
+    useLazySearchProductsQuery,
+    
 } = apiservice
