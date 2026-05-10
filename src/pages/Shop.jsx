@@ -9,6 +9,7 @@ import { Pagination } from '../ui/Pagination'
 const Shop = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get('category');
+  console.log(category)
 
 
   const [limit, setLimit] = useState(30);
@@ -24,6 +25,7 @@ const Shop = () => {
   const { data: categories } = useGetCategoryListQuery();
 
   useEffect(() => {
+    console.log(data)
     if (data?.total) {
       setTotalPage(Math.ceil(data?.total / limit))
     }

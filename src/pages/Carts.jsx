@@ -4,6 +4,7 @@ const Carts = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+    
     const data = JSON.parse(localStorage.getItem('cartProducts')) || [];
     setItems(data);
   }, []);

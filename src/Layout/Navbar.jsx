@@ -15,6 +15,36 @@ const Navbar = () => {
     const [search, setSearch] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
 
+    // ✅ User state — localStorage থেকে নিচ্ছি
+    const [user, setUser] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("user")) || null;
+        } catch {
+            return null;
+        }
+    });
+
+    // ✅ Logout function
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+        navigate("/login");
+    };
+
+    // ✅ অন্য page এ লগিন হলেও Navbar update হবে
+    useEffect(() => {
+        const syncUser = () => {
+            try {
+                setUser(JSON.parse(localStorage.getItem("user")) || null);
+            } catch {
+                setUser(null);
+            }
+        };
+        window.addEventListener("storage", syncUser);
+        return () => window.removeEventListener("storage", syncUser);
+    }, []);
+
     const [searchTrigger, { data: searchProducts }] = useLazySearchProductsQuery();
 
     useEffect(() => {
@@ -27,7 +57,7 @@ const Navbar = () => {
             }
         }, 1000);
         return () => clearTimeout(delay);
-    }, [search, searchTrigger]);
+    }, [search]);
 
     const handleSearch = (e) => setSearch(e.target.value);
 
@@ -41,29 +71,23 @@ const Navbar = () => {
                 navigate(`/shop/${firstProduct.id}`);
             }
         }
-
-
     };
-    // state add করুন উপরে
+
     const [cartCount, setCartCount] = useState(0);
 
-    // useEffect add করুন
-useEffect(() => {
-    const updateCount = () => {
-        try {
-            const items = JSON.parse(localStorage.getItem('cartProducts')) || [];
-            setCartCount(items.length);
-        } catch {
-            setCartCount(0);
-        }
-    };
-    updateCount();
-    window.addEventListener('storage', updateCount);
-    return () => window.removeEventListener('storage', updateCount);
-}, []);
-
- 
-  
+    useEffect(() => {
+        const updateCount = () => {
+            try {
+                const items = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                setCartCount(items.length);
+            } catch {
+                setCartCount(0);
+            }
+        };
+        updateCount();
+        window.addEventListener('storage', updateCount);
+        return () => window.removeEventListener('storage', updateCount);
+    }, []);
 
     return (
         <header>
@@ -141,10 +165,32 @@ useEffect(() => {
                     </div>
 
                     <div className='flex md:gap-10 gap-5 order-2 md:order-3'>
-                        <Link to="/login" className='flex gap-1.5 items-center'>
-                            <FaRegUser className='text-xl' />
-                            <span className='hidden md:block'>Login</span>
-                        </Link>
+
+                        {/* ✅ লগিন থাকলে user এর নাম + Logout, না থাকলে Login */}
+                        {user ? (
+                            <div className='flex items-center gap-3'>
+                                <div className='flex gap-1.5 items-center'>
+                                    <div className='w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold'>
+                                        {user.firstName?.charAt(0).toUpperCase()}
+                                    </div>
+                                    <span className='hidden md:block text-sm font-medium'>
+                                        {user.firstName} {user.lastName}
+                                    </span>
+                                </div>
+                                <button
+                                    onClick={handleLogout}
+                                    className='text-sm text-red-500 hover:underline hidden md:block'
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <Link to="/login" className='flex gap-1.5 items-center'>
+                                <FaRegUser className='text-xl' />
+                                <span className='hidden md:block'>Login</span>
+                            </Link>
+                        )}
+
                         <Link to="/api" className='flex items-center gap-1.5'>
                             <GoHeart className='text-xl' />
                             <span className='hidden md:block'>Wishlist</span>

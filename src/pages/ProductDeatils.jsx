@@ -11,6 +11,7 @@ const ProductDeatils = () => {
 
 
   const { id } = useParams();
+  console.log(id)
   const { data } = useGetProductDetailsQuery(id);
 
   const [selectedSize, setselectedSize] = useState("S")
