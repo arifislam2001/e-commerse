@@ -123,44 +123,49 @@ const Navbar = () => {
                         >
                             <IoSearch />
                         </Button>
-
-                        {showDropdown && searchProducts?.products?.length > 0 && (
-                            <div className="absolute top-full left-0 w-full bg-white shadow-2xl z-[9999] rounded-xl mt-1 border border-gray-100">
-                                <div className="px-4 pt-4 pb-2">
-                                    <p className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">
-                                        Trending Products
-                                    </p>
-                                </div>
-                                <div className="max-h-[340px] overflow-y-auto px-4 pb-4">
-                                    <div className="grid grid-cols-3 gap-2">
-                                        {searchProducts.products.map((item) => (
-                                            <div
-                                                key={item.id}
-                                                onClick={() => {
-                                                    setSearch("");
-                                                    setShowDropdown(false);
-                                                    navigate(`/shop/${item.id}`);
-                                                }}
-                                                className="border border-gray-100 rounded-xl p-2 cursor-pointer hover:border-gray-300 hover:shadow-sm transition-all text-center group"
-                                            >
-                                                <div className="bg-gray-50 group-hover:bg-gray-100 transition-colors rounded-lg h-[72px] flex items-center justify-center mb-2">
-                                                    <img
-                                                        src={item.thumbnail}
-                                                        alt={item.title}
-                                                        className="h-16 w-full object-contain"
-                                                    />
+                        {showDropdown && (
+                            searchProducts?.products?.length > 0 ? (
+                                <div className="absolute top-full left-0 w-full bg-white shadow-2xl z-[9999] rounded-xl mt-1 border border-gray-100">
+                                    <div className="px-4 pt-4 pb-2">
+                                        <p className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">
+                                            Trending Products
+                                        </p>
+                                    </div>
+                                    <div className="max-h-[340px] overflow-y-auto px-4 pb-4">
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {searchProducts.products.map((item) => (
+                                                <div
+                                                    key={item.id}
+                                                    onClick={() => {
+                                                        setSearch("");
+                                                        setShowDropdown(false);
+                                                        navigate(`/shop/${item.id}`);
+                                                    }}
+                                                    className="border border-gray-100 rounded-xl p-2 cursor-pointer hover:border-gray-300 hover:shadow-sm transition-all text-center group"
+                                                >
+                                                    <div className="bg-gray-50 group-hover:bg-gray-100 transition-colors rounded-lg h-[72px] flex items-center justify-center mb-2">
+                                                        <img
+                                                            src={item.thumbnail}
+                                                            alt={item.title}
+                                                            className="h-16 w-full object-contain"
+                                                        />
+                                                    </div>
+                                                    <p className="text-[11px] font-medium truncate text-gray-800">
+                                                        {item.title}
+                                                    </p>
+                                                    <p className="text-[11px] text-red-500 font-semibold mt-0.5">
+                                                        ৳{item.price}
+                                                    </p>
                                                 </div>
-                                                <p className="text-[11px] font-medium truncate text-gray-800">
-                                                    {item.title}
-                                                </p>
-                                                <p className="text-[11px] text-red-500 font-semibold mt-0.5">
-                                                    ৳{item.price}
-                                                </p>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <div className="absolute top-full left-0 w-full bg-white shadow-2xl z-[9999] rounded-xl mt-1 border border-gray-100 px-4 py-6 text-center">
+                                    <p className="text-sm text-gray-400">No products found for "<span className="text-gray-600 font-medium">{search}</span>"</p>
+                                </div>
+                            )
                         )}
                     </div>
 

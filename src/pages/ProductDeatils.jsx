@@ -2,21 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import Slider from "react-slick";
 import { Link, useParams } from 'react-router-dom';
 import { IoStar } from 'react-icons/io5';
-import { FaCheck, FaCheckCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaCheck, FaCheckCircle } from 'react-icons/fa';
 import { IoMdHeart } from 'react-icons/io';
 import { NextArrow, PrevArrow } from '../ui/Arrows';
 import { useGetProductDetailsQuery } from '../services/api';
 
 const ProductDeatils = () => {
-
-
   const { id } = useParams();
-  console.log(id)
   const { data } = useGetProductDetailsQuery(id);
 
   const [selectedSize, setselectedSize] = useState("S")
-  const [val, setVal] = useState(1)
-  const [totalPrice, setTotalPrice] = useState(null)
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const [isLoved, setIsLoved] = useState(false)
@@ -27,12 +22,6 @@ const ProductDeatils = () => {
     setNav1(sliderRef1);
     setNav2(sliderRef2);
   }, []);
-
-  useEffect(() => {
-    if (data?.price) {
-      setTotalPrice(data.price)
-    }
-  }, [data])
 
   const settingsLarge = {
     dots: false,
@@ -52,73 +41,47 @@ const ProductDeatils = () => {
   };
 
   const catagories = [
-    " Direct Full Array",
-    "  Quantum Dot Technology",
-    "  Ambient Mode",
-    "  One Remote Control"
+    "Direct Full Array",
+    "Quantum Dot Technology",
+    "Ambient Mode",
+    "One Remote Control"
   ]
 
   const size = ["S", "M", "L", "X", "XL", "XXL"]
 
-  const plus = () => {
-    const newVal = val + 1
-    setVal(newVal)
-    setTotalPrice((data?.price * newVal).toFixed(2))
-  }
-
-  const minus = () => {
-    if (val > 1) {
-      const newVal = val - 1
-      setVal(newVal)
-      setTotalPrice((data?.price * newVal).toFixed(2))
-    }
-  }
-const handleAddToCart = () => {
-  fetch('https://dummyjson.com/carts/add', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      userId: 1,
-      products: [{ id: data?.id, quantity: val }]
-    })
-  })
-  .then(res => res.json())
-  .then(res => {
-  
-
+  const handleAddToCart = () => {
     try {
       const existing = JSON.parse(localStorage.getItem('cartProducts')) || [];
       const found = existing.find(p => p.id === data?.id);
       let updated;
 
       if (found) {
-        updated = existing.map(p =>
-          p.id === data?.id ? { ...p, quantity: p.quantity + val } : p
-        );
+        // cart এ already আছে, quantity cart এ গিয়ে বাড়াবে
+        alert('Already in cart!');
+        return;
       } else {
         updated = [...existing, {
           id: data?.id,
           title: data?.title,
           price: data?.price,
           thumbnail: data?.thumbnail,
-          quantity: val,
+          quantity: 1,
         }];
       }
 
       localStorage.setItem('cartProducts', JSON.stringify(updated));
       window.dispatchEvent(new StorageEvent('storage', { key: 'cartProducts' }));
-    } catch(err) {
+    } catch (err) {
       console.log('cart error:', err);
     }
-  });
-};
+  };
 
   return (
     <section className='py-14'>
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-28">
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-10'>
 
-          <Slider className='max-w-xl md:col-span-3'{...settingsLarge} asNavFor={nav2} ref={slider => (sliderRef1 = slider)}>
+          <Slider className='max-w-xl md:col-span-3' {...settingsLarge} asNavFor={nav2} ref={slider => (sliderRef1 = slider)}>
             {data?.images.map((item) => (
               <div key={item}>
                 <img src={item} alt="" className='w-full transition-transform duration-300 hover:scale-110' />
@@ -136,7 +99,7 @@ const handleAddToCart = () => {
           >
             {data?.images.map((item) => (
               <div key={item}>
-                <img src={item} alt="" className='w-full transition-transform duration-300 hover:scale-110 ' />
+                <img src={item} alt="" className='w-full transition-transform duration-300 hover:scale-110' />
               </div>
             ))}
           </Slider>
@@ -147,6 +110,7 @@ const handleAddToCart = () => {
           <div className='border-b pb-6 border-[#EAEAEA]'>
             <h1 className='text-primary font-medium text-lg md:text-xl lg:text-4xl'>{data?.title}</h1>
             <p className='text-primary text-2xl mt-4'>{data?.description}</p>
+
             <div className='flex flex-wrap items-center gap-2 my-6'>
               <p className='text-lg md:text-xl'>{data?.rating}</p>
               <IoStar className='text-lg md:text-xl text-yellow-500' />
@@ -172,7 +136,7 @@ const handleAddToCart = () => {
             </div>
 
             <div className='my-8 flex flex-wrap items-center gap-4'>
-              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand'>${totalPrice}</p>
+              <p className='text-2xl md:text-3xl lg:text-4xl font-semibold text-brand'>${data?.price}</p>
               <p className='line-through text-base md:text-xl text-primary/50'>$1,020.99</p>
               <p className='bg-badge px-2.5 py-1 text-white text-sm md:text-base'>{data?.discountPercentage}</p>
             </div>
@@ -190,7 +154,7 @@ const handleAddToCart = () => {
             <div className='ml-4 md:ml-7 my-4 flex'>
               <ol className='list-disc space-y-2 md:space-y-4'>
                 {catagories.map((item) => (
-                  <li className='text-primary'>{item}</li>
+                  <li key={item} className='text-primary'>{item}</li>
                 ))}
               </ol>
             </div>
@@ -199,23 +163,24 @@ const handleAddToCart = () => {
           <div className='flex flex-wrap gap-4 md:gap-6 items-center'>
             <p>Size</p>
             {size.map((item) => (
-              <label key={item} htmlFor={item} className={`py-1 px-3 border border-secondary/10 ${selectedSize === item && "bg-brand text-white"}`}>
+              <label key={item} htmlFor={item} className={`py-1 px-3 border border-secondary/10 cursor-pointer ${selectedSize === item && "bg-brand text-white"}`}>
                 {item}
                 <input onChange={(e) => setselectedSize(e.target.value)} value={item} type="radio" name='size' id={item} hidden />
               </label>
             ))}
           </div>
 
+          {/* Quantity বাদ — cart এ manage হবে */}
           <div className='py-4 flex flex-wrap gap-4 md:gap-8 items-center mt-4'>
-            <p>Quantity: </p>
-            <div className='flex gap-2 md:gap-4 border items-center border-[#EAEAEA] rounded'>
-              <button onClick={minus} className='bg-[#EFEFEF] px-3 md:px-4 py-2 text-lg md:text-xl'>-</button>
-              <p>{val}</p>
-              <button onClick={plus} className='bg-[#EFEFEF] px-3 md:px-4 py-2 text-lg md:text-xl'>+</button>
-            </div>
-
-            <Link className='bg-brand text-white px-4 md:px-6 py-2 rounded' onClick={handleAddToCart}>Add cart</Link>
-            <Link className='border-2 border-blue-400 px-4 md:px-6 py-1.5 bg-blue-50 font-semibold text-blue-400 rounded'>Buy Now</Link>
+            <button
+              className='bg-brand text-white px-4 md:px-6 py-2 rounded'
+              onClick={handleAddToCart}
+            >
+              Add to cart
+            </button>
+            <Link className='border-2 border-blue-400 px-4 md:px-6 py-1.5 bg-blue-50 font-semibold text-blue-400 rounded'>
+              Buy Now
+            </Link>
           </div>
         </div>
       </div>

@@ -5,16 +5,18 @@ import { MdOutlineStar } from 'react-icons/md'
 import { Link } from 'react-router'
 
 const ProductCard = ({ data}) => {
-  
+ 
   
   return (
- <div className='mt-7 p-2.5 border border-[#E9E9E9] rounded-2xl flex flex-col shadow justify-between bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-2'>
+ <Link  to={`/shop/${data.id}`} className='mt-7 p-2.5 border border-[#E9E9E9] rounded-2xl flex flex-col shadow justify-between bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-2'>
     
    
        <div className=' rounded-2xl  overflow-hidden relative'>
-       <Link to={`/shop/${data.id}`}>
-         <img src={data?.thumbnail} alt="" className='w-full transition-transform duration-300 hover:scale-110'/>
-       </Link>
+     
+        <div>
+            <img src={data?.thumbnail} alt="" className='w-full transition-transform duration-300 hover:scale-110'/>
+        </div>
+      
        {
         data?.discountPercentage &&
         
@@ -48,7 +50,7 @@ const ProductCard = ({ data}) => {
 
        </div>
        
-    </div>
+    </Link>
   )
 }
 
