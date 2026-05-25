@@ -1,5 +1,5 @@
 import React from 'react'
-import Banner from '../components/Banners'
+import Banner from '../components/Home/Banner'
 import Catagory from '../components/Catagory'
 import SmartPhones from '../components/Home/SmartPhones'
 import FeatureProduct from '../components/Home/FeatureProduct'
